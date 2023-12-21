@@ -1,6 +1,18 @@
-import { Redirect, Route } from 'react-router-dom'
-import { IonApp, IonRouterOutlet, setupIonicReact } from '@ionic/react'
+import { 
+  Redirect, 
+  Route } from 'react-router-dom'
+import { 
+  IonApp, 
+  IonIcon, 
+  IonRouterOutlet, 
+  IonTabBar, 
+  IonTabButton, 
+  IonTabs, 
+  setupIonicReact } from '@ionic/react'
 import { IonReactRouter } from '@ionic/react-router'
+import { 
+  heartOutline, 
+  trashOutline } from "ionicons/icons"
 
 
 /* Core CSS required for Ionic components to work properly */
@@ -26,6 +38,7 @@ import { HomePage } from './pages/home'
 import { 
   QueryClient, 
   QueryClientProvider } from '@tanstack/react-query'
+import { TabCreateArticleIcon } from './components/svgs/tabCreateArticle'
 
 
 setupIonicReact()
@@ -36,14 +49,40 @@ const App: React.FC = () => (
   <QueryClientProvider client={ queryClient }>
     <IonApp>
       <IonReactRouter>
-        <IonRouterOutlet>
-          <Route exact path="/home">
-            <HomePage />
-          </Route>
-          <Route exact path="/">
-            <Redirect to="/home" />
-          </Route>
-        </IonRouterOutlet>
+        <IonTabs>
+          <IonRouterOutlet>
+            <Redirect exact path='/' to="/home" />
+            <Route exact path="/likes">
+              <HomePage />
+            </Route>
+            <Route exact path="/home">
+              <HomePage />
+            </Route>
+            <Route exact path="/removed">
+              <HomePage />
+            </Route>
+          </IonRouterOutlet>
+          <IonTabBar slot='bottom'>
+            <IonTabButton 
+              tab="likes" 
+              href="/likes"
+              className='bg-white'>
+              <IonIcon icon={ heartOutline } />
+            </IonTabButton>
+            <IonTabButton 
+              tab="home" 
+              href="/home"
+              className='bg-white'>
+              <TabCreateArticleIcon />
+            </IonTabButton>
+            <IonTabButton 
+              tab="removed" 
+              href="/removed"
+              className='bg-white'>
+              <IonIcon icon={ trashOutline } />
+            </IonTabButton>
+          </IonTabBar>
+        </IonTabs>
       </IonReactRouter>
     </IonApp>
   </QueryClientProvider>
