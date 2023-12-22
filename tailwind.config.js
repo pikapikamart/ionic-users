@@ -1,4 +1,7 @@
 /** @type {import('tailwindcss').Config} */
+
+const plugin = require("tailwindcss/plugin")
+
 module.exports = {
   content: [
     "./src/**/*.{js,jsx,ts,tsx}",
@@ -11,5 +14,14 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    plugin(function({ addVariant }) {
+      addVariant("native", "&::part(native)")
+      addVariant("scroll", "&::part(scroll)")
+      addVariant("image", "&::part(image)")
+      addVariant("background", "&::part(background)")
+      addVariant("content", "&::part(content)")
+      addVariant("content", "&::part(detail-icon)")
+    })
+  ],
 }

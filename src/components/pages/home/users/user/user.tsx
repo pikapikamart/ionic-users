@@ -20,13 +20,15 @@ const User = ({ user, onRemove, onClick }: UserProps) =>{
 
   return (
     <IonItemSliding>
-      <IonItem onClick={ onClick }>
+      <IonItem 
+        onClick={ onClick } 
+        className="white-bg">
         <IonAvatar slot="start">
           <IonImg
             src={ user.picture.thumbnail }
             alt={ `${ user.name.first } ${ user.name.last }` } />
         </IonAvatar>
-        <IonLabel>{ user.name.first } { user.name.last }</IonLabel>
+        <IonLabel className="!text-gray-950">{ user.name.first } { user.name.last }</IonLabel>
       </IonItem>
       <IonItemOptions>
         <IonItemOption>Save</IonItemOption>

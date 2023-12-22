@@ -8,8 +8,8 @@ const Home = () => {
 
   return (
     <IonPage>
-      <IonContent>
-        <main>
+      <IonContent className="background:bg-white bg-white">
+        <main className="bg-white">
           <HomeUsersSection />
         </main>
       </IonContent>

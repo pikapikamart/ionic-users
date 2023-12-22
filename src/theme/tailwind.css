@@ -1,3 +1,79 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer utilities {
+  .reset-button-padding {
+    --padding-start: 0 !important;
+    --padding-end: 0 !important;
+    --padding-top: 0 !important;
+    --padding-bottom: 0 !important;
+  }
+  
+  .reset-tabbar-background {
+    --background: transparent;
+  }
+
+  .reset-x-padding {
+    --padding-start: 0;
+    --padding-end: 0;
+    --inner-padding-start: 0;
+    --inner-padding-end: 0;
+  }
+
+  .reset-ion-padding {
+    --padding-start: 0 !important;
+    --padding-end: 0 !important;
+    --padding-top: 0 !important;
+    --padding-bottom: 0 !important;
+    --inner-padding-top: 0px;
+    --inner-padding-bottom: 0px;
+    --inner-padding-start: 0px;
+    --inner-padding-end: 0px;
+  }
+
+  .reset-ion-margin {
+    --margin-start: 0 !important;
+    --margin-end: 0 !important;
+    --margin-top: 0 !important;
+    --margin-bottom: 0 !important;
+    margin-inline-start: 0 !important;
+    margin-inline-end: 0 !important;
+    --inner-margin-top: 0px;
+    --inner-margin-bottom: 0px;
+    --inner-margin-start: 0px;
+    --inner-margin-end: 0px;
+  }
+
+  .reset-ion-m-height {
+    --min-height: 0px;
+  }
+
+  /* Backgrounds */
+  .transparent-bg {
+    --background: transparent;
+  }
+
+  .white-bg {
+    --background: white;
+  }
+
+  .transparent-hover {
+    --background-hover: transparent;
+  }
+
+  .transparent-ripple {
+    --ripple-color: transparent;
+  }
+
+  .no-shadow {
+    --background-hover: none;
+    box-shadow: none !important;
+    --box-shadow: none !important;
+  }
+
+  /* Tabbar */
+  .tab_bar {
+    box-shadow: 0px 4px 50px 0px rgba(0, 0, 0, 0.25);
+  }
+}

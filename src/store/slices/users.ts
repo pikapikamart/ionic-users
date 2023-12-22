@@ -22,6 +22,7 @@ export type User = {
   }
   location: {
     city: string
+    state: string
     country: string
     postcode: number
     street: {
