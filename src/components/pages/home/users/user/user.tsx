@@ -12,14 +12,15 @@ import { HandleRemoveUser } from "../hook"
 
 export type UserProps = {
   user: TUser,
-  onRemove: HandleRemoveUser
+  onRemove: HandleRemoveUser,
+  onClick: VoidFunction 
 }
 
-const User = ({ user, onRemove }: UserProps) =>{
+const User = ({ user, onRemove, onClick }: UserProps) =>{
 
   return (
     <IonItemSliding>
-      <IonItem>
+      <IonItem onClick={ onClick }>
         <IonAvatar slot="start">
           <IonImg
             src={ user.picture.thumbnail }

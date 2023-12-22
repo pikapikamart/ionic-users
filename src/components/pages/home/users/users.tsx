@@ -1,9 +1,13 @@
-import { IonList } from "@ionic/react"
+import { 
+  IonContent,
+  IonList, 
+  IonModal } from "@ionic/react"
 import { useHomeUsers } from "./hook"
 import { UsersItem } from "./user"
 import { 
   AnimatePresence, 
   motion } from "framer-motion"
+import { useRef } from "react"
 
 
 const containerVariant = {
@@ -26,7 +30,11 @@ const itemVariant = {
 const Users = () => {
   const { 
     users,
-    handleRemoveUser } = useHomeUsers()
+    handleRemoveUser,
+    handleSetUserIndex,
+    handleRemoveUserIndex,
+    userIndex } = useHomeUsers()
+  const modal = useRef<HTMLIonModalElement>(null)
  
   const renderUsers = () => {
     const mappedUsers = users.map((user, index) => (
@@ -35,7 +43,8 @@ const Users = () => {
         key={ `home-user-${ user.email }-${ index }` }>
         <UsersItem 
           user={ user }
-          onRemove={ handleRemoveUser } />
+          onRemove={ handleRemoveUser }
+          onClick={ () => handleSetUserIndex(index) } />
       </motion.div>
     ))
 
@@ -57,6 +66,13 @@ const Users = () => {
           </motion.div>
         </IonList>
       ) }
+      <IonModal
+        ref={ modal }
+        isOpen={ userIndex!==null }>
+        <IonContent>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio, itaque.</p>
+        </IonContent>
+      </IonModal>
     </>
   )
 }

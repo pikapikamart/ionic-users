@@ -20,13 +20,25 @@ export const useHomeUsers = () =>{
     },
     refetchOnWindowFocus: false
   })
+  const [ userIndex, setUserIndex ] = useState<null | number>(null)
 
   const handleRemoveUser: HandleRemoveUser = ( email ) => {
     setUsers(prev => prev.filter(user => user.email !== email))
   }
-  
+
+  const handleSetUserIndex = ( index: number ) =>{
+    setUserIndex(index)
+  }
+
+  const handleRemoveUserIndex = () =>{
+    setUserIndex(null)
+  }
+
   return {
     users,
-    handleRemoveUser
+    handleRemoveUser,
+    handleSetUserIndex,
+    handleRemoveUserIndex,
+    userIndex 
   }
 }
