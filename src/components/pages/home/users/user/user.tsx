@@ -6,7 +6,7 @@ import {
   IonItemOptions, 
   IonItemSliding, 
   IonLabel} from "@ionic/react"
-import { TUser } from "./types"
+import { User as TUser } from "@/store/slices/users"
 import { HandleRemoveUser } from "../hook"
 
 

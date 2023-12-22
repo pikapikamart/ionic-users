@@ -1,17 +1,17 @@
 import axios from "axios"
 import { useAppQuery } from "../../../lib/useAppQuery"
 import { useState } from "react"
-import { TUser } from "./user/types"
+import { User } from "@/store/slices/users"
 
 
 type QueryData = { 
-  results: TUser[]
+  results: User[]
 }
 
 export type HandleRemoveUser = ( email: string ) => void
 
 export const useHomeUsers = () =>{
-  const [ users, setUsers ] = useState<TUser[]>([])
+  const [ users, setUsers ] = useState<User[]>([])
   useAppQuery({
     queryKey: ["users"],
     queryFn: async () => await axios.get<QueryData>("https://randomuser.me/api/?results=100"),
