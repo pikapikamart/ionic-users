@@ -9,6 +9,7 @@ import {
   IonImg, 
   IonModal, 
   IonText,
+  IonToast,
   IonToolbar,
   createGesture} from "@ionic/react"
 import { arrowBackOutline } from "ionicons/icons"
@@ -30,7 +31,10 @@ const User = ({
   const user = users && userIndex!==null? users[userIndex] : undefined
   const { 
     modal,
-    setModalContent } = useUserModal(userIndex, handleSetUserIndex)
+    setModalContent,  
+    isUserAdded,
+    isUserAlreadyLiked,
+    handleAddUserToLikes } = useUserModal(userIndex, handleSetUserIndex)
 
   return (
     <IonModal
@@ -70,6 +74,7 @@ const User = ({
           </div>
           <div className="flex justify-center">
             <IonButton 
+              onClick={ handleAddUserToLikes }
               className="normal-case mr-2">Add to likes</IonButton>
             <IonButton 
               color="danger"
@@ -77,6 +82,17 @@ const User = ({
           </div>
         </div>
         ) }
+        <IonToast
+          isOpen={ isUserAdded }
+          position="top"
+          message="User added to likes"
+          duration={3000}  />
+        <IonToast
+          isOpen={ isUserAlreadyLiked }
+          position="top"
+          message="User already added to likes"
+          color="danger"
+          duration={3000}  />
       </IonContent>
     </IonModal>
   )

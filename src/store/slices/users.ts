@@ -66,7 +66,7 @@ export const userSlice = createSlice({
 export const { 
   addLikedUser,
   removeLikedUser } = userSlice.actions
-export const selectUser = ( state: RootState ) => state.users
+export const selectUsers = ( state: RootState ) => state.users
 
 
 export type UsersReducer<T> = CaseReducer<InitialState, PayloadAction<T>>
