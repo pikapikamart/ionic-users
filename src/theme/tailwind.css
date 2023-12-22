@@ -72,6 +72,12 @@
     --box-shadow: none !important;
   }
 
+  .no-border {
+    --border-width: 0 !important;
+    --border-style: none !important;
+    --border-color: transparent !important;
+  }
+
   /* Tabbar */
   .tab_bar {
     box-shadow: 0px 4px 50px 0px rgba(0, 0, 0, 0.25);

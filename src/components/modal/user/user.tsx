@@ -1,5 +1,6 @@
 import { useQueryUsers } from "@/components/lib/useQueryUsers"
 import { 
+  GestureDetail,
   IonButton,
   IonButtons,
   IonContent, 
@@ -8,27 +9,35 @@ import {
   IonImg, 
   IonModal, 
   IonText,
-  IonToolbar} from "@ionic/react"
+  IonToolbar,
+  createGesture} from "@ionic/react"
 import { arrowBackOutline } from "ionicons/icons"
-import { useRef } from "react"
+import { useEffect, useRef, useState } from "react"
+import { useUserModal } from "./hook"
 
 
 type UserProps = {
   userIndex: number | null
   handleRemoveUserIndex: VoidFunction
+  handleSetUserIndex: ( index: number ) => void
 }
 
-const User = ({ userIndex, handleRemoveUserIndex }: UserProps) =>{
+const User = ({ 
+  userIndex, 
+  handleRemoveUserIndex,
+  handleSetUserIndex }: UserProps) =>{
   const { users } = useQueryUsers()
-  const modal = useRef<HTMLIonModalElement>(null)
   const user = users && userIndex!==null? users[userIndex] : undefined
+  const { 
+    modal,
+    setModalContent } = useUserModal(userIndex, handleSetUserIndex)
 
   return (
     <IonModal
       ref={ modal }
       isOpen={ userIndex!==null }>
       <IonHeader className="bg-[#f8f7de] transparent-bg no-shadow px-4">
-        <IonToolbar className="bg-[#f8f7de] transparent-bg">
+        <IonToolbar className="bg-[#f8f7de] transparent-bg no-border">
           <IonButtons>
             <IonButton onClick={ handleRemoveUserIndex }>
               <IonIcon
@@ -40,7 +49,9 @@ const User = ({ userIndex, handleRemoveUserIndex }: UserProps) =>{
       </IonHeader>
       <IonContent className="background:bg-[#f8f7de]">
         { user && (
-        <div className="py-8 px-4">
+        <div
+          ref={ e => setModalContent(e) }
+          className="py-8 px-4">
           <div className="max-w-max mx-auto rounded-full border-[3px] bg-white border-blue-600 p-1 mb-4">
             <IonImg
               className="image:rounded-full rounded-full"

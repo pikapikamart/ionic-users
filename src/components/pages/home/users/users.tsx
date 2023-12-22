@@ -46,7 +46,7 @@ const Users = () => {
 
     return mappedUsers
   }
-
+  
   return (
     <>
       { users.length !== 0 && (
@@ -64,7 +64,8 @@ const Users = () => {
       ) }
       <UserModal 
         userIndex={ userIndex }
-        handleRemoveUserIndex={ handleRemoveUserIndex } />
+        handleRemoveUserIndex={ handleRemoveUserIndex }
+        handleSetUserIndex={ handleSetUserIndex } />
     </>
   )
 }
