@@ -7,6 +7,7 @@ import {
   User, 
   addLikedUser, 
   addRemovedUser, 
+  removeLikedUser, 
   selectUsers } from "@/store/slices/users"
 import { 
   useAppDispatch, 
@@ -45,6 +46,10 @@ export const useHomeUsers = () =>{
 
     setUsers(prev => prev.filter(user => user.email !== email))
     dispatch(addRemovedUser(foundUser))
+
+    if ( likedUsers.find(user => user.email===foundUser.email) ) {
+      dispatch(removeLikedUser(foundUser.email))
+    }
   }
 
   const handleSetUserIndex = ( index: number ) =>{
@@ -55,7 +60,17 @@ export const useHomeUsers = () =>{
     setUserIndex(null)
   }
 
-  const handleAddUserToLikes = () =>{
+  const handleAddUserToLikes = (email?: string) =>{
+    if ( email ) {
+      const foundUser = users.find(user => user.email===email)
+
+      if ( foundUser ) {
+
+        setIsUserAdded(true)
+        return dispatch(addLikedUser( foundUser ))
+      }
+    }
+
     if ( !users || userIndex===null ) {
 
       return

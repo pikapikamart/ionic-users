@@ -16,13 +16,15 @@ export type UserProps = {
   onRemove: HandleRemoveUser,
   onClick: VoidFunction,
   isLiked?: boolean
+  onLike: ( email?: string ) => void
 }
 
 const User = ({ 
   user, 
   onRemove, 
   onClick,
-  isLiked }: UserProps) =>{
+  isLiked,
+  onLike }: UserProps) =>{
 
   return (
     <IonItemSliding>
@@ -42,8 +44,12 @@ const User = ({
         ) }
       </IonItem>
       <IonItemOptions>
-        <IonItemOption>Like</IonItemOption>
+        <IonItemOption
+          onClick={ () => isLiked? null : onLike(user.email) }
+          className="normal-case" >{ isLiked? "Liked" : "Like" }
+        </IonItemOption>
         <IonItemOption 
+          className="normal-case"
           color="danger"
           onClick={ () => onRemove(user.email) }>Remove</IonItemOption>
       </IonItemOptions>

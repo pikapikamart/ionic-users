@@ -1,4 +1,4 @@
-import { IonList } from "@ionic/react"
+import { IonButton, IonList } from "@ionic/react"
 import { useLikesUsers } from "./hook"
 import { UsersItem } from "./user"
 import { 
@@ -28,10 +28,10 @@ const itemVariant = {
 const Users = () => {
   const { 
     likedUsers,
-    handleRemoveUser,
     handleSetUserIndex,
     handleRemoveUserIndex,
-    userIndex } = useLikesUsers()
+    userIndex,
+    handleUnlikeUser } = useLikesUsers()
  
   if ( !likedUsers.length ) {
 
@@ -45,8 +45,8 @@ const Users = () => {
         key={ `home-user-${ user.email }-${ index }` }>
         <UsersItem 
           user={ user }
-          onRemove={ handleRemoveUser }
-          onClick={ () => handleSetUserIndex(index) } />
+          onClick={ () => handleSetUserIndex(index) }
+          onUnlike={ handleUnlikeUser } />
       </motion.div>
     ))
 
@@ -72,7 +72,12 @@ const Users = () => {
         users={ likedUsers }
         userIndex={ userIndex }
         handleRemoveUserIndex={ handleRemoveUserIndex }
-        handleSetUserIndex={ handleSetUserIndex } />
+        handleSetUserIndex={ handleSetUserIndex }>
+        <IonButton 
+          onClick={ () => handleUnlikeUser() }
+          className="normal-case mr-2">Unlike user
+        </IonButton>
+      </UserModal>
     </>
   )
 }

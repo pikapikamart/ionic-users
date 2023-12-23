@@ -14,10 +14,6 @@ export const useLikesUsers = () =>{
   const dispatch = useAppDispatch()
   const [ userIndex, setUserIndex ] = useState<null | number>(null)
 
-  const handleRemoveUser: HandleRemoveUser = ( email ) => {
-    dispatch(removeLikedUser(email))
-  }
-
   const handleSetUserIndex = ( index: number ) =>{
     setUserIndex(index)
   }
@@ -26,11 +22,36 @@ export const useLikesUsers = () =>{
     setUserIndex(null)
   }
 
+  const handleUnlikeUser = (email?: string) => {
+    if ( userIndex === null && !email ) {
+
+      return
+    }
+
+    if ( email ) {
+
+      return dispatch(removeLikedUser(email))
+    }
+
+    if ( userIndex !== null ) {
+
+      dispatch(removeLikedUser(likedUsers[userIndex].email))
+      
+      if ( likedUsers.length===1 ) {
+        setUserIndex(null)
+      } else if ( likedUsers.length === userIndex+1 ) {
+        setUserIndex(userIndex-1)
+      }
+    }
+
+ 
+  }
+
   return {
     likedUsers,
-    handleRemoveUser,
     handleSetUserIndex,
     handleRemoveUserIndex,
-    userIndex 
+    userIndex,
+    handleUnlikeUser
   }
 }

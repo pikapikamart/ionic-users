@@ -47,6 +47,7 @@ const Users = () => {
           user={ user }
           onRemove={ handleRemoveUser }
           onClick={ () => handleSetUserIndex(index) }
+          onLike={ handleAddUserToLikes }
           isLiked={ !!likedUsers.find(likedUser => likedUser.email===user.email) } />
       </motion.div>
     ))

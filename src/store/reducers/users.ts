@@ -6,7 +6,7 @@ export const addLikedUserReducer: UsersReducer<User> = (state, action) =>{
 }
 
 export const removedLikedUserReducer: UsersReducer<User["email"]> = (state, action) => {
-  state.likedUsers.filter(user => user.email!==action.payload)
+  state.likedUsers = state.likedUsers.filter(user => user.email!==action.payload)
 }
 
 export const addRemovedUserReducer: UsersReducer<User> = (state, action) => {

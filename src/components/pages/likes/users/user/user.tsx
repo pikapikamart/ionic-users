@@ -7,16 +7,15 @@ import {
   IonItemSliding, 
   IonLabel} from "@ionic/react"
 import { User as TUser } from "@/store/slices/users"
-import { HandleRemoveUser } from "../hook"
 
 
 export type UserProps = {
   user: TUser,
-  onRemove: HandleRemoveUser,
-  onClick: VoidFunction 
+  onClick: VoidFunction,
+  onUnlike: ( email?: string ) => void
 }
 
-const User = ({ user, onRemove, onClick }: UserProps) =>{
+const User = ({ user, onClick, onUnlike }: UserProps) =>{
 
   return (
     <IonItemSliding>
@@ -31,10 +30,9 @@ const User = ({ user, onRemove, onClick }: UserProps) =>{
         <IonLabel className="!text-gray-950">{ user.name.first } { user.name.last }</IonLabel>
       </IonItem>
       <IonItemOptions>
-        <IonItemOption>Save</IonItemOption>
-        <IonItemOption 
-          color="danger"
-          onClick={ () => onRemove(user.email) }>Remove</IonItemOption>
+        <IonItemOption
+          className="normal-case" 
+          onClick={ () => onUnlike(user.email) }>Unlike</IonItemOption>
       </IonItemOptions>
     </IonItemSliding>
   )
