@@ -7,9 +7,10 @@ import {
   IonImg, 
   IonModal, 
   IonText,
-  IonToast,
   IonToolbar } from "@ionic/react"
-import { arrowBackOutline } from "ionicons/icons"
+import { 
+  arrowBackOutline, 
+  informationCircle } from "ionicons/icons"
 import { useUserModal } from "./hook"
 import { User as TUser } from "@/store/slices/users"
 
@@ -48,7 +49,7 @@ const User = ({
           </IonButtons>
         </IonToolbar>
       </IonHeader>
-      <IonContent className="background:bg-[#f8f7de]">
+      <IonContent className="background:bg-[#f8f7de] relative">
         { user && (
         <div
           ref={ e => setModalContent(e) }
@@ -71,6 +72,12 @@ const User = ({
           </div>
           <div className="flex justify-center">
             { children }
+          </div>
+          <div className="absolute bottom-4 left-1/2 flex items-center -translate-x-1/2">
+            <IonIcon
+              className=" mr-2" 
+              icon={ informationCircle } />
+            <IonText className="text-sm text-gray-600 font-semibold">Swipe to change user</IonText>
           </div>
         </div>
         ) }
