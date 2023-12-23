@@ -8,7 +8,8 @@ import {
   addLikedUser, 
   addRemovedUser, 
   removeLikedUser, 
-  selectUsers } from "@/store/slices/users"
+  selectUsers, 
+  setUsers} from "@/store/slices/users"
 import { 
   useAppDispatch, 
   useAppSelector } from "@/store/hook"
@@ -21,17 +22,17 @@ type QueryData = {
 export type HandleRemoveUser = ( email: string ) => void
 
 export const useHomeUsers = () =>{
-  const [ users, setUsers ] = useState<User[]>([])
+  const { users } = useAppSelector(selectUsers)
+  const dispatch = useAppDispatch()
   useAppQuery({
     queryKey: ["users"],
     queryFn: async () => await axios.get<QueryData>("https://randomuser.me/api/?results=100"),
     onSuccess: data => {
-      setUsers(data.data.results)
+      dispatch(setUsers(data.data.results))
     },
     refetchOnWindowFocus: false
   })
   const [ userIndex, setUserIndex ] = useState<null | number>(null)
-  const dispatch = useAppDispatch()
   const { likedUsers } = useAppSelector(selectUsers)
   const [ isUserAdded, setIsUserAdded ] = useState(false)
   const [ isUserAlreadyLiked, setIsUserAlreadyLiked ] = useState(false)
@@ -44,11 +45,19 @@ export const useHomeUsers = () =>{
       return
     }
 
-    setUsers(prev => prev.filter(user => user.email !== email))
     dispatch(addRemovedUser(foundUser))
 
     if ( likedUsers.find(user => user.email===foundUser.email) ) {
       dispatch(removeLikedUser(foundUser.email))
+    }
+
+    if ( userIndex !== null ) {
+
+      if ( users.length===1 ) {
+        setUserIndex(null)
+      } else if ( users.length === userIndex+1 ) {
+        setUserIndex(userIndex-1)
+      }
     }
   }
 

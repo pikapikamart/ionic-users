@@ -40,6 +40,7 @@ import {
   QueryClientProvider } from '@tanstack/react-query'
 import { TabCreateArticleIcon } from './components/svgs/tabCreateArticle'
 import { LikesPage } from './pages/likes'
+import { RemovedPage } from './pages/removed'
 
 
 setupIonicReact()
@@ -60,7 +61,7 @@ const App: React.FC = () => (
               <HomePage />
             </Route>
             <Route exact path="/removed">
-              <HomePage />
+              <RemovedPage />
             </Route>
           </IonRouterOutlet>
           <IonTabBar slot='bottom'>

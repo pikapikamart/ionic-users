@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { 
   removeLikedUser, 
+  restoreUser, 
   selectUsers } from "@/store/slices/users"
 import { 
   useAppDispatch, 
@@ -10,7 +11,7 @@ import {
 export type HandleRemoveUser = ( email: string ) => void
 
 export const useLikesUsers = () =>{
-  const { likedUsers } = useAppSelector(selectUsers)
+  const { removedUsers } = useAppSelector(selectUsers)
   const dispatch = useAppDispatch()
   const [ userIndex, setUserIndex ] = useState<null | number>(null)
 
@@ -22,34 +23,41 @@ export const useLikesUsers = () =>{
     setUserIndex(null)
   }
 
-  const handleUnlikeUser = (email?: string) => {
-    if ( userIndex === null && !email ) {
+  const handleRestoreUser = (email?: string) => {
+    if ( email ) {
+      const foundUser = removedUsers.find(user => user.email===email)
+
+      if ( foundUser ) {
+
+        return dispatch(restoreUser(foundUser))
+      }
+    }
+
+    if ( userIndex === null ) {
 
       return
     }
 
-    if ( email ) {
-
-      return dispatch(removeLikedUser(email))
-    }
 
     if ( userIndex !== null ) {
 
-      dispatch(removeLikedUser(likedUsers[userIndex].email))
+      dispatch(restoreUser(removedUsers[userIndex]))
       
-      if ( likedUsers.length===1 ) {
+      if ( removedUsers.length===1 ) {
         setUserIndex(null)
-      } else if ( likedUsers.length === userIndex+1 ) {
+      } else if ( removedUsers.length === userIndex+1 ) {
         setUserIndex(userIndex-1)
       }
     }
+
+ 
   }
 
   return {
-    likedUsers,
+    removedUsers,
     handleSetUserIndex,
     handleRemoveUserIndex,
     userIndex,
-    handleUnlikeUser
+    handleRestoreUser
   }
 }

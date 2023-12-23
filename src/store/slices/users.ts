@@ -6,7 +6,9 @@ import { RootState } from "..";
 import { 
   addLikedUserReducer, 
   addRemovedUserReducer, 
-  removedLikedUserReducer } from "../reducers/users";
+  removedLikedUserReducer, 
+  restoreUserReducer, 
+  setUsersReducer} from "../reducers/users";
 
 
 export type User = {
@@ -46,11 +48,13 @@ export type User = {
 }
 
 type InitialState = {
+  users: User[]
   likedUsers: User[]
   removedUsers: User[]
 }
 
 const initialState: InitialState = {
+  users: [],
   likedUsers: [],
   removedUsers: []
 }
@@ -59,16 +63,20 @@ export const userSlice = createSlice({
   name: "users",
   initialState,
   reducers: {
+    setUsers: setUsersReducer,
     addLikedUser: addLikedUserReducer,
     removeLikedUser: removedLikedUserReducer,
-    addRemovedUser: addRemovedUserReducer
+    addRemovedUser: addRemovedUserReducer,
+    restoreUser: restoreUserReducer
   },
 })
 
 export const { 
+  setUsers,
   addLikedUser,
   removeLikedUser,
-  addRemovedUser } = userSlice.actions
+  addRemovedUser,
+  restoreUser } = userSlice.actions
 export const selectUsers = ( state: RootState ) => state.users
 
 
