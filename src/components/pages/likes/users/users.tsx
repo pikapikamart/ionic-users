@@ -5,6 +5,7 @@ import {
   AnimatePresence, 
   motion } from "framer-motion"
 import { UserModal } from "@/components/modal/user"
+import { EmptyUsers } from "@/components/shared/users/empty"
 
 
 const containerVariant = {
@@ -32,6 +33,11 @@ const Users = () => {
     handleRemoveUserIndex,
     userIndex } = useLikesUsers()
  
+  if ( !likedUsers.length ) {
+
+    return <EmptyUsers />
+  }
+
   const renderUsers = () => {
     const mappedUsers = likedUsers.map((user, index) => (
       <motion.div
@@ -50,7 +56,7 @@ const Users = () => {
   return (
     <>
       { likedUsers.length !== 0 && (
-        <IonList className="bg-white">
+        <IonList className="bg-transparent">
           <motion.div
             variants={ containerVariant }
             initial="hidden"
@@ -63,6 +69,7 @@ const Users = () => {
         </IonList>
       ) }
       <UserModal 
+        users={ likedUsers }
         userIndex={ userIndex }
         handleRemoveUserIndex={ handleRemoveUserIndex }
         handleSetUserIndex={ handleSetUserIndex } />

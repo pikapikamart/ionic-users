@@ -1,10 +1,12 @@
-import { IonList } from "@ionic/react"
+import { IonButton, IonList, IonToast } from "@ionic/react"
 import { useHomeUsers } from "./hook"
 import { UsersItem } from "./user"
 import { 
   AnimatePresence, 
   motion } from "framer-motion"
 import { UserModal } from "@/components/modal/user"
+import { useAppSelector } from "@/store/hook"
+import { selectUsers } from "@/store/slices/users"
 
 
 const containerVariant = {
@@ -30,7 +32,11 @@ const Users = () => {
     handleRemoveUser,
     handleSetUserIndex,
     handleRemoveUserIndex,
-    userIndex } = useHomeUsers()
+    userIndex,
+    handleAddUserToLikes,
+    isUserAdded,
+    isUserAlreadyLiked } = useHomeUsers()
+  const { likedUsers } = useAppSelector(selectUsers)
  
   const renderUsers = () => {
     const mappedUsers = users.map((user, index) => (
@@ -40,7 +46,8 @@ const Users = () => {
         <UsersItem 
           user={ user }
           onRemove={ handleRemoveUser }
-          onClick={ () => handleSetUserIndex(index) } />
+          onClick={ () => handleSetUserIndex(index) }
+          isLiked={ !!likedUsers.find(likedUser => likedUser.email===user.email) } />
       </motion.div>
     ))
 
@@ -50,7 +57,7 @@ const Users = () => {
   return (
     <>
       { users.length !== 0 && (
-        <IonList className="bg-white">
+        <IonList className="bg-transparent">
           <motion.div
             variants={ containerVariant }
             initial="hidden"
@@ -66,7 +73,29 @@ const Users = () => {
         users={ users }
         userIndex={ userIndex }
         handleRemoveUserIndex={ handleRemoveUserIndex }
-        handleSetUserIndex={ handleSetUserIndex } />
+        handleSetUserIndex={ handleSetUserIndex }>
+        <IonButton 
+          onClick={ () => userIndex!==null && likedUsers.find(likedUser => likedUser.email===users[userIndex].email)? null : handleAddUserToLikes() }
+          className="normal-case mr-2">{ userIndex!==null && likedUsers.find(likedUser => likedUser.email===users[userIndex].email)? "User liked" : "Add user to likes" }
+        </IonButton>
+        <IonButton 
+          color="danger"
+          onClick={ () => userIndex !== null && handleRemoveUser(users[userIndex].email) }
+          className="normal-case">Remove user
+        </IonButton>
+      </UserModal>
+      <IonToast
+          isOpen={ isUserAdded }
+          position="top"
+          color="primary"
+          message="User added to likes"
+          duration={1000}  />
+        <IonToast
+          isOpen={ isUserAlreadyLiked }
+          position="top"
+          message="User already added to likes"
+          color="danger"
+          duration={1000}  />
     </>
   )
 }

@@ -1,22 +1,20 @@
-import { useQueryUsers } from "@/components/lib/useQueryUsers"
-import { useAppDispatch, useAppSelector } from "@/store/hook"
-import { addLikedUser, selectUsers } from "@/store/slices/users"
-import { GestureDetail, createGesture } from "@ionic/react"
+import { User } from "@/store/slices/users"
+import { 
+  GestureDetail, 
+  createGesture } from "@ionic/react"
 import { 
   useEffect,
   useRef, 
   useState } from "react"
 
 
-export const useUserModal = (userIndex: number | null, handleSetUserIndex: (index: number) => void) =>{
+export const useUserModal = (
+  userIndex: number | null, 
+  handleSetUserIndex: (index: number) => void,
+  users: User[]) =>{
   const modal = useRef<HTMLIonModalElement>(null)
   const [ modalContent, setModalContent ] = useState<HTMLDivElement | null>(null)
   const gestureAction = useRef<"prev" | "next" | null>(null)
-  const { users } = useQueryUsers()
-  const [ isUserAdded, setIsUserAdded ] = useState(false)
-  const [ isUserAlreadyLiked, setIsUserAlreadyLiked ] = useState(false)
-  const { likedUsers } = useAppSelector(selectUsers)
-  const dispatch = useAppDispatch()
 
   const onMove = (detail: GestureDetail) => {
     const { deltaX } = detail
@@ -36,30 +34,12 @@ export const useUserModal = (userIndex: number | null, handleSetUserIndex: (inde
 
     switch(gestureAction.current) {
       case "next":
-        handleSetUserIndex(userIndex !== 99? (userIndex+1) : userIndex)
+        handleSetUserIndex(userIndex !== users.length-1? (userIndex+1) : userIndex)
         return 
       case "prev":
         handleSetUserIndex(userIndex!==0? (userIndex-1) : userIndex)
         return 
     }
-  }
-
-  const handleAddUserToLikes = () =>{
-    if ( !users || userIndex===null ) {
-
-      return
-    }
-
-    const foundUser = users[userIndex]
-
-    if ( likedUsers.find(user => user.email===foundUser.email) ) {
-      
-      return setIsUserAlreadyLiked(true)
-    }
-
-    dispatch(addLikedUser(foundUser))
-
-    return setIsUserAdded(true)
   }
  
   useEffect(() => {
@@ -79,23 +59,9 @@ export const useUserModal = (userIndex: number | null, handleSetUserIndex: (inde
     }
   }, [modalContent, userIndex])
 
-  useEffect(() => {
-    if ( isUserAdded || isUserAlreadyLiked ) {
-      const timeout = setTimeout(() => {
-        setIsUserAdded(false)
-        setIsUserAlreadyLiked(false)
-      }, 3000)  
-
-      return () => clearTimeout(timeout)
-    }
-  }, [isUserAdded, isUserAlreadyLiked])
-
   return {
     modal,
     modalContent,
     setModalContent,
-    handleAddUserToLikes,
-    isUserAdded,
-    isUserAlreadyLiked
   }
 }

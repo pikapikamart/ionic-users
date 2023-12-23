@@ -8,8 +8,8 @@ const Likes = () =>{
 
   return (
     <IonPage>
-      <IonContent className="background:bg-white bg-white">
-        <main className="bg-white">
+      <IonContent className="background:bg-[#f8f7de]">
+        <main className="bg-[#f8f7de]">
           <LikesUsersSection />
         </main>
       </IonContent>

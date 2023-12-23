@@ -22,7 +22,7 @@ const User = ({ user, onRemove, onClick }: UserProps) =>{
     <IonItemSliding>
       <IonItem 
         onClick={ onClick } 
-        className="white-bg">
+        className="native:bg-[#f8f7de]">
         <IonAvatar slot="start">
           <IonImg
             src={ user.picture.thumbnail }

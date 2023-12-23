@@ -18,21 +18,20 @@ type UserProps = {
   users: TUser[]
   userIndex: number | null
   handleRemoveUserIndex: VoidFunction
-  handleSetUserIndex: ( index: number ) => void
+  handleSetUserIndex: ( index: number ) => void,
+  children?: React.ReactNode
 }
 
 const User = ({
   users, 
   userIndex, 
   handleRemoveUserIndex,
-  handleSetUserIndex }: UserProps) =>{
+  handleSetUserIndex,
+  children }: UserProps) =>{
   const user = users && userIndex!==null? users[userIndex] : undefined
   const { 
     modal,
-    setModalContent,  
-    isUserAdded,
-    isUserAlreadyLiked,
-    handleAddUserToLikes } = useUserModal(userIndex, handleSetUserIndex)
+    setModalContent } = useUserModal(userIndex, handleSetUserIndex, users)
 
   return (
     <IonModal
@@ -71,27 +70,11 @@ const User = ({
             </IonText>
           </div>
           <div className="flex justify-center">
-            <IonButton 
-              onClick={ handleAddUserToLikes }
-              className="normal-case mr-2">Add to likes</IonButton>
-            <IonButton 
-              color="danger"
-              className="normal-case">Remove user</IonButton>
+            { children }
           </div>
         </div>
         ) }
-        <IonToast
-          isOpen={ isUserAdded }
-          position="top"
-          color="primary"
-          message="User added to likes"
-          duration={2000}  />
-        <IonToast
-          isOpen={ isUserAlreadyLiked }
-          position="top"
-          message="User already added to likes"
-          color="danger"
-          duration={2000}  />
+        
       </IonContent>
     </IonModal>
   )

@@ -5,6 +5,7 @@ import {
 import { RootState } from "..";
 import { 
   addLikedUserReducer, 
+  addRemovedUserReducer, 
   removedLikedUserReducer } from "../reducers/users";
 
 
@@ -59,13 +60,15 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     addLikedUser: addLikedUserReducer,
-    removeLikedUser: removedLikedUserReducer
+    removeLikedUser: removedLikedUserReducer,
+    addRemovedUser: addRemovedUserReducer
   },
 })
 
 export const { 
   addLikedUser,
-  removeLikedUser } = userSlice.actions
+  removeLikedUser,
+  addRemovedUser } = userSlice.actions
 export const selectUsers = ( state: RootState ) => state.users
 
 
