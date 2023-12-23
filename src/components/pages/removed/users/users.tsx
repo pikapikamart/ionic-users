@@ -1,4 +1,6 @@
-import { IonButton, IonList } from "@ionic/react"
+import { 
+  IonButton, 
+  IonList } from "@ionic/react"
 import { useLikesUsers } from "./hook"
 import { UsersItem } from "./user"
 import { 
@@ -6,24 +8,8 @@ import {
   motion } from "framer-motion"
 import { UserModal } from "@/components/modal/user"
 import { EmptyUsers } from "@/components/shared/users/empty"
+import { containerVariant, itemVariant } from "@/components/shared/framer/variants/variants"
 
-
-const containerVariant = {
-  hidden: { opacity: 0 },
-  show: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.05
-    }
-  },
-  exit:{ opacity: 0 }
-}
-
-const itemVariant = {
-  hidden: { opacity: 0 },
-  show: { opacity: 1 },
-  exit: { opacity: 0, x: -300  }
-}
 
 const Users = () => {
   const { 
