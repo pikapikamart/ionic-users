@@ -1,5 +1,5 @@
 import { IonList } from "@ionic/react"
-import { useHomeUsers } from "./hook"
+import { useLikesUsers } from "./hook"
 import { UsersItem } from "./user"
 import { 
   AnimatePresence, 
@@ -26,14 +26,14 @@ const itemVariant = {
 
 const Users = () => {
   const { 
-    users,
+    likedUsers,
     handleRemoveUser,
     handleSetUserIndex,
     handleRemoveUserIndex,
-    userIndex } = useHomeUsers()
+    userIndex } = useLikesUsers()
  
   const renderUsers = () => {
-    const mappedUsers = users.map((user, index) => (
+    const mappedUsers = likedUsers.map((user, index) => (
       <motion.div
         variants={ itemVariant }
         key={ `home-user-${ user.email }-${ index }` }>
@@ -49,7 +49,7 @@ const Users = () => {
   
   return (
     <>
-      { users.length !== 0 && (
+      { likedUsers.length !== 0 && (
         <IonList className="bg-white">
           <motion.div
             variants={ containerVariant }
@@ -63,7 +63,6 @@ const Users = () => {
         </IonList>
       ) }
       <UserModal 
-        users={ users }
         userIndex={ userIndex }
         handleRemoveUserIndex={ handleRemoveUserIndex }
         handleSetUserIndex={ handleSetUserIndex } />

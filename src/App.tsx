@@ -39,6 +39,7 @@ import {
   QueryClient, 
   QueryClientProvider } from '@tanstack/react-query'
 import { TabCreateArticleIcon } from './components/svgs/tabCreateArticle'
+import { LikesPage } from './pages/likes'
 
 
 setupIonicReact()
@@ -53,7 +54,7 @@ const App: React.FC = () => (
           <IonRouterOutlet>
             <Redirect exact path='/' to="/home" />
             <Route exact path="/likes">
-              <HomePage />
+              <LikesPage />
             </Route>
             <Route exact path="/home">
               <HomePage />

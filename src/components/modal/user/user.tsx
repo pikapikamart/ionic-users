@@ -1,6 +1,4 @@
-import { useQueryUsers } from "@/components/lib/useQueryUsers"
 import { 
-  GestureDetail,
   IonButton,
   IonButtons,
   IonContent, 
@@ -10,24 +8,24 @@ import {
   IonModal, 
   IonText,
   IonToast,
-  IonToolbar,
-  createGesture} from "@ionic/react"
+  IonToolbar } from "@ionic/react"
 import { arrowBackOutline } from "ionicons/icons"
-import { useEffect, useRef, useState } from "react"
 import { useUserModal } from "./hook"
+import { User as TUser } from "@/store/slices/users"
 
 
 type UserProps = {
+  users: TUser[]
   userIndex: number | null
   handleRemoveUserIndex: VoidFunction
   handleSetUserIndex: ( index: number ) => void
 }
 
-const User = ({ 
+const User = ({
+  users, 
   userIndex, 
   handleRemoveUserIndex,
   handleSetUserIndex }: UserProps) =>{
-  const { users } = useQueryUsers()
   const user = users && userIndex!==null? users[userIndex] : undefined
   const { 
     modal,
@@ -85,14 +83,15 @@ const User = ({
         <IonToast
           isOpen={ isUserAdded }
           position="top"
+          color="primary"
           message="User added to likes"
-          duration={3000}  />
+          duration={2000}  />
         <IonToast
           isOpen={ isUserAlreadyLiked }
           position="top"
           message="User already added to likes"
           color="danger"
-          duration={3000}  />
+          duration={2000}  />
       </IonContent>
     </IonModal>
   )
